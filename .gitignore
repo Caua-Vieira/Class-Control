@@ -1,0 +1,14 @@
+# Node.js
+node_modules/
+.env
+*.log
+npm-debug.log*
+package-lock.json
+dist
+
+# Docker
+docker-compose.override.yml
+.DS_Store
+
+# Editor/IDE
+.vscode/
