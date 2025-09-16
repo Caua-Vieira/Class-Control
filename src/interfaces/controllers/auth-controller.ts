@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { Inject } from "typescript-ioc";
+import { Inject, Singleton } from "typescript-ioc";
 import { LoginUseCase } from "../../application/usecases/login-usecase";
 
+@Singleton
 export class AuthController {
 
     constructor(

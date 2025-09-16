@@ -1,18 +1,12 @@
 import { Inject } from "typescript-ioc";
 import { LoginRepository } from "../../../domain/contracts/login-repository";
 import { User } from "../../../domain/entities/user";
-import { DataSource, Repository } from "typeorm";
+import { Database } from "../../database/database";
 
 export class HttpLoginRepository implements LoginRepository {
-    private repository: Repository<User>
-
-    constructor(
-        @Inject dataSource: DataSource
-    ) {
-        this.repository = dataSource.getRepository(User);
-    }
+    constructor(@Inject private database: Database) { }
 
     async findLoginByEmail(email: string): Promise<User | null> {
-        return this.repository.findOne({ where: { email } });
+        return this.database.appDataSource.getRepository(User).findOne({ where: { email } });
     }
 }
