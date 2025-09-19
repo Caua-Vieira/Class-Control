@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { Inject } from "typescript-ioc";
 import { LoginRepository } from "../../domain/contracts/login-repository";
 import { generateToken } from "../../infrastructure/config/jwt";
+import { InvalidCredentialsException } from "../../domain/errors/errors";
 
 export class LoginUseCase {
 
@@ -11,10 +12,10 @@ export class LoginUseCase {
 
     async execute(email: string, password: string) {
         const user = await this.loginRepository.findLoginByEmail(email);
-        if (!user) throw new Error("Credenciais inválidas");
+        if (!user) throw new InvalidCredentialsException("Credenciais inválidas");
 
         const isValid = await bcrypt.compare(password, user.password);
-        if (!isValid) throw new Error("Credenciais inválidas");
+        if (!isValid) throw new InvalidCredentialsException("Credenciais inválidas");
 
         const token = generateToken({ id: user.id, role: user.role, email: user.email });
         return token;
