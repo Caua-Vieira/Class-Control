@@ -17,7 +17,7 @@ export class LoginUseCase {
         const isValid = await bcrypt.compare(password, user.password);
         if (!isValid) throw new InvalidCredentialsException("Credenciais inválidas");
 
-        const token = generateToken({ id: user.id, role: user.role, email: user.email });
+        const token = generateToken({ id: user.id, email: user.email });
         return token;
     }
 }

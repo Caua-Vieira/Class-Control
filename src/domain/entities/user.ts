@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
 
 @Entity("users")
 export class User {
-    @PrimaryGeneratedColumn("uuid")
+    @PrimaryGeneratedColumn()
     id!: string;
 
     @Column({ type: "varchar", length: 100 })
@@ -13,9 +13,6 @@ export class User {
 
     @Column({ type: "varchar", length: 255 })
     password!: string;
-
-    @Column({ type: "varchar", length: 50 })
-    role!: string;
 
     @CreateDateColumn({ name: "created_at" })
     createdAt!: Date;
