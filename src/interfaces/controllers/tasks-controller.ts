@@ -25,6 +25,6 @@ export class TasksController {
             userId
         })
 
-        res.status(204);
+        res.status(204).send();
     }
 }
