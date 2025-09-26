@@ -3,7 +3,7 @@ import { AuthController } from "../controllers/auth-controller";
 import { Container } from "typescript-ioc";
 import { TasksController } from "../controllers/tasks-controller";
 
-export const classControlRouter = (): Router => {
+export const smartTasksManagement = (): Router => {
     const router = Router();
     const authController = Container.get(AuthController);
     const tasksController = Container.get(TasksController);
