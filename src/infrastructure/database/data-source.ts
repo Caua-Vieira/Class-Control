@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import dotenv from "dotenv";
 import { User } from "../../domain/entities/user";
+import { Task } from "../../domain/entities/tasks";
 
 dotenv.config();
 
@@ -12,7 +13,7 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_USER || "admin",
     password: process.env.DB_PASSWORD || "admin",
     database: process.env.DB_NAME || "class_control",
-    entities: [User],
+    entities: [User, Task],
     synchronize: false,
     logging: true,
 });
