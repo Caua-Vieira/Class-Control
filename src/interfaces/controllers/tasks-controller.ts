@@ -17,7 +17,7 @@ export class TasksController {
             userId
         } = req.body
 
-        await this.tasksUseCase.createTasksUseCase({
+        await this.tasksUseCase.createTasks({
             title,
             description,
             dueDate,
@@ -26,5 +26,17 @@ export class TasksController {
         })
 
         res.status(204).send();
+    }
+
+    async deleteTasks(req: Request, res: Response) {
+        await this.tasksUseCase.deleteTasks(Number(req.params.id))
+
+        res.status(204).send();
+    }
+
+    async getTasks(req: Request, res: Response) {
+        const response = await this.tasksUseCase.getTasks()
+
+        res.status(200).send(response);
     }
 }

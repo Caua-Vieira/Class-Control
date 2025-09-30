@@ -4,7 +4,7 @@ import { User } from "./user";
 @Entity("tasks")
 export class Task {
     @PrimaryGeneratedColumn()
-    id!: string;
+    id!: number;
 
     @Column({ type: "varchar", length: 100 })
     title!: string;

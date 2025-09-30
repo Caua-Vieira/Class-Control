@@ -12,5 +12,9 @@ export const smartTasksManagement = (): Router => {
 
     router.post("/tasks", (req, res) => tasksController.createTasks(req, res));
 
+    router.delete("/tasks/:id", (req, res) => tasksController.deleteTasks(req, res));
+
+    router.get("/tasks", (req, res) => tasksController.getTasks(req, res));
+
     return router;
 };
