@@ -39,4 +39,12 @@ export class TasksController {
 
         res.status(200).send(response);
     }
+
+    async concludeTasks(req: Request, res: Response) {
+        const { id } = req.params;
+
+        await this.tasksUseCase.concludeTasks(Number(id));
+
+        res.status(204).send();
+    }
 }

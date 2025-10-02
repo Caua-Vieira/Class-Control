@@ -25,4 +25,8 @@ export class TasksUseCase {
 
         return response
     }
+
+    async concludeTasks(id: number): Promise<void> {
+        await this.tasksRepository.concludeTasks(id, { status: 'Concluída' });
+    }
 }

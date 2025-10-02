@@ -16,5 +16,7 @@ export const smartTasksManagement = (): Router => {
 
     router.get("/tasks", (req, res) => tasksController.getTasks(req, res));
 
+    router.put("/tasks/:id/conclude", (req, res) => tasksController.getTasks(req, res));
+
     return router;
 };

@@ -66,4 +66,12 @@ export class HttpTasksRepository implements TasksRepository {
             throw new DatabaseException("Ocorreu um erro ao buscar as tasks");
         }
     }
+
+    async concludeTasks(id: number, data: Partial<Task>): Promise<void> {
+        try {
+            await this.database.appDataSource.getRepository(Task).update(id, data);
+        } catch (error) {
+            throw new DatabaseException("Erro ao atualizar a task");
+        }
+    }
 }
