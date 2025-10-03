@@ -3,6 +3,7 @@ import { TasksRepository } from "../../domain/contracts/tasks-repository";
 import { TasksRequestDTO } from "../../domain/types/tasks-request-dto";
 import { TasksResponseDTO } from "../../domain/types/tasks-response-dto";
 import { NotFoundException } from "../../domain/errors/errors";
+import { Task } from "../../domain/entities/tasks";
 
 export class TasksUseCase {
 
@@ -28,5 +29,9 @@ export class TasksUseCase {
 
     async concludeTasks(id: number): Promise<void> {
         await this.tasksRepository.concludeTasks(id, { status: 'Concluída' });
+    }
+
+    async updateTasks(id: number, data: Partial<Task>): Promise<void> {
+        await this.tasksRepository.concludeTasks(id, data);
     }
 }

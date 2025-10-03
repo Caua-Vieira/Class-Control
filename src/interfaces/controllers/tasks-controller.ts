@@ -47,4 +47,11 @@ export class TasksController {
 
         res.status(204).send();
     }
+
+    async updateTasks(req: Request, res: Response) {
+        const { id } = req.params;
+        const { data } = req.body;
+
+
+    }
 }
