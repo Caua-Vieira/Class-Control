@@ -1,5 +1,5 @@
 import express from "express";
-import { smartTasksManagement } from "./routes/smart-tasks-management-routes";
+import { smartTasksManagement } from "./routes/routes";
 import { errorHandler } from "../middleware/error-handler";
 
 const app = express();
