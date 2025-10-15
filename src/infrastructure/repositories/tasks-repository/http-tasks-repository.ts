@@ -10,7 +10,7 @@ import { mapTaskToDTO } from "../../../domain/mappers/map-tasks-response";
 export class HttpTasksRepository implements TasksRepository {
     constructor(@Inject private database: Database) { }
 
-    async createTasks(input: TasksRequestDTO): Promise<void> {
+    async createTasks(input: TasksRequestDTO): Promise<Task> {
         try {
             const repository = this.database.appDataSource.getRepository(Task);
 
@@ -22,8 +22,9 @@ export class HttpTasksRepository implements TasksRepository {
                 user: { id: input.userId },
             });
 
-            await repository.save(task);
+            const saved = await repository.save(task);
 
+            return saved;
         } catch (error) {
             throw new DatabaseException("Ocorreu um erro ao criar tasks");
         }

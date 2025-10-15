@@ -4,15 +4,28 @@ import { TasksRequestDTO } from "../../domain/types/tasks-request-dto";
 import { TasksResponseDTO } from "../../domain/types/tasks-response-dto";
 import { NotFoundException } from "../../domain/errors/errors";
 import { Task } from "../../domain/entities/tasks";
+import { TaskCreatedEvent } from "../../domain/events/task-created-events";
+import { MessageQueue } from "../../domain/contracts/messaging/message-queue";
 
 export class TasksUseCase {
 
     constructor(
-        @Inject private readonly tasksRepository: TasksRepository
+        @Inject private readonly tasksRepository: TasksRepository,
+        @Inject private readonly messageQueue: MessageQueue
     ) { }
 
     async createTasks(input: TasksRequestDTO): Promise<void> {
-        await this.tasksRepository.createTasks(input);
+        const task = await this.tasksRepository.createTasks(input);
+
+        const event: TaskCreatedEvent = {
+            id: task.id,
+            title: task.title,
+            description: task.description,
+            dueDate: task.dueDate.toISOString(),
+            userId: task.user.id,
+        };
+
+        await this.messageQueue.publish("task_created", event);
     }
 
     async deleteTasks(id: number): Promise<void> {
