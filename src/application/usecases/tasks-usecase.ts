@@ -21,7 +21,7 @@ export class TasksUseCase {
             id: task.id,
             title: task.title,
             description: task.description,
-            dueDate: task.dueDate.toISOString(),
+            dueDate: task.dueDate.toString(),
             userId: task.user.id,
         };
 
