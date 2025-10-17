@@ -23,3 +23,11 @@ export class InvalidCredentialsException extends Error {
         Object.setPrototypeOf(this, InvalidCredentialsException.prototype);
     }
 }
+export class MessageQueueException extends Error {
+    public readonly name: string = 'Message Queue Error';
+
+    constructor(message: string) {
+        super(message);
+        Object.setPrototypeOf(this, InvalidCredentialsException.prototype);
+    }
+}

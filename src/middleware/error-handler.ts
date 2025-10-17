@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { DatabaseException, InvalidCredentialsException, NotFoundException } from "../domain/errors/errors";
+import { DatabaseException, InvalidCredentialsException, MessageQueueException, NotFoundException } from "../domain/errors/errors";
 
 export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction): void {
     if (err instanceof NotFoundException) {
@@ -14,6 +14,11 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
 
     if (err instanceof InvalidCredentialsException) {
         res.status(401).json({ error: err.message });
+        return;
+    }
+
+    if (err instanceof MessageQueueException) {
+        res.status(503).json({ error: err.message });
         return;
     }
 
