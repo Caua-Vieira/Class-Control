@@ -37,7 +37,7 @@ export class TasksUseCase {
 
         if (!response) throw new NotFoundException("Tarefas não encontradas");
 
-        return response
+        return response;
     }
 
     async concludeTasks(id: number): Promise<void> {
