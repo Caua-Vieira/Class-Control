@@ -1,6 +1,7 @@
 import amqp from "amqplib";
 import { EmailService } from "../domain/contracts/email/email-service";
 import { Container } from "typescript-ioc";
+import { QueueProcessingException } from "../domain/errors/errors";
 
 async function startWorker() {
     try {
@@ -11,8 +12,6 @@ async function startWorker() {
         await channel.assertQueue(queue, { durable: true });
 
         const emailService = Container.get(EmailService);
-
-        console.log(`Aguardando mensagens na fila: ${queue}`);
 
         channel.consume(queue, async (msg) => {
             if (msg) {
@@ -32,12 +31,11 @@ async function startWorker() {
 
                     channel.ack(msg);
                 } catch (error) {
-                    console.log("Erro ao processar mensagem:", error);
+                    throw new QueueProcessingException('Erro ao processar fila');
                 }
             }
         });
     } catch (error) {
-        console.error("[Worker] Erro ao iniciar o consumidor:", error);
         process.exit(1);
     }
 }

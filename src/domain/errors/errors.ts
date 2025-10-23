@@ -31,3 +31,20 @@ export class MessageQueueException extends Error {
         Object.setPrototypeOf(this, InvalidCredentialsException.prototype);
     }
 }
+export class QueueProcessingException extends Error {
+    public readonly name: string = 'Queue Processing Error';
+
+    constructor(message: string) {
+        super(message);
+        Object.setPrototypeOf(this, InvalidCredentialsException.prototype);
+    }
+}
+
+export class EmailSendException extends Error {
+    public readonly name: string = 'Email Send Error';
+
+    constructor(message: string) {
+        super(message);
+        Object.setPrototypeOf(this, InvalidCredentialsException.prototype);
+    }
+}

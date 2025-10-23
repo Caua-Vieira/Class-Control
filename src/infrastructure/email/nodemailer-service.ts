@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import { EmailService } from "../../domain/contracts/email/email-service";
+import { EmailSendException } from "../../domain/errors/errors";
 
 export class NodemailerService implements EmailService {
     private transporter;
@@ -26,8 +27,7 @@ export class NodemailerService implements EmailService {
             });
             console.log(`Email enviado para ${to}`);
         } catch (error) {
-            console.error("Erro ao enviar email:", error);
-            throw new Error("Falha no envio de e-mail");
+            throw new EmailSendException("Falha no envio de e-mail");
         }
     }
 }
