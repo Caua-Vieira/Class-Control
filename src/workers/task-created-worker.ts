@@ -17,8 +17,6 @@ async function startWorker() {
             if (msg) {
                 const content = JSON.parse(msg.content.toString());
 
-                console.log("Mensagem recebida:", content);
-
                 try {
                     const content = JSON.parse(msg.content.toString());
                     const { title, description, userEmail } = content;

@@ -25,7 +25,6 @@ export class NodemailerService implements EmailService {
                 subject,
                 html: body,
             });
-            console.log(`Email enviado para ${to}`);
         } catch (error) {
             throw new EmailSendException("Falha no envio de e-mail");
         }
