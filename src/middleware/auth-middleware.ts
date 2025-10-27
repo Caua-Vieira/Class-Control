@@ -14,7 +14,7 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        // req.user = decoded;
+        (req as any).user = decoded;
         return next();
     } catch (error) {
         return res.status(401).json({ message: "Token inválido ou expirado" });
