@@ -9,21 +9,13 @@ export class TasksController {
     ) { }
 
     async createTasks(req: Request, res: Response) {
-        const {
-            title,
-            description,
-            dueDate,
-            status,
-            userId
-        } = req.body
 
-        await this.tasksUseCase.createTasks({
-            title,
-            description,
-            dueDate,
-            status,
-            userId
-        })
+        const input = {
+            ...req.body,
+            userEmail: (req as any).user.email
+        }
+
+        await this.tasksUseCase.createTasks(input)
 
         res.status(204).send();
     }

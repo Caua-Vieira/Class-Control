@@ -22,6 +22,7 @@ export class TasksUseCase {
             title: task.title,
             description: task.description,
             dueDate: task.dueDate.toString(),
+            userEmail: input.userEmail,
             userId: task.user.id,
         };
 

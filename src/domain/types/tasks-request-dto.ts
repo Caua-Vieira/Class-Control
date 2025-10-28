@@ -4,4 +4,5 @@ export interface TasksRequestDTO {
     dueDate: string;
     status: string;
     userId: number;
+    userEmail: string;
 }

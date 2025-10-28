@@ -3,5 +3,6 @@ export interface TaskCreatedEvent {
     title: string;
     description: string;
     dueDate: string;
+    userEmail: string;
     userId: number;
 }
