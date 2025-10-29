@@ -2,6 +2,7 @@ import amqp from "amqplib";
 import { EmailService } from "../domain/contracts/email/email-service";
 import { Container } from "typescript-ioc";
 import { QueueProcessingException } from "../domain/errors/errors";
+import "../infrastructure/config/ioc";
 
 async function startWorker() {
     try {
@@ -15,8 +16,6 @@ async function startWorker() {
 
         channel.consume(queue, async (msg) => {
             if (msg) {
-                const content = JSON.parse(msg.content.toString());
-
                 try {
                     const content = JSON.parse(msg.content.toString());
                     const { title, description, userEmail } = content;
