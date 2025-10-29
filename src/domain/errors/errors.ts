@@ -28,7 +28,7 @@ export class MessageQueueException extends Error {
 
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(this, InvalidCredentialsException.prototype);
+        Object.setPrototypeOf(this, MessageQueueException.prototype);
     }
 }
 export class QueueProcessingException extends Error {
@@ -36,7 +36,7 @@ export class QueueProcessingException extends Error {
 
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(this, InvalidCredentialsException.prototype);
+        Object.setPrototypeOf(this, QueueProcessingException.prototype);
     }
 }
 
@@ -45,6 +45,15 @@ export class EmailSendException extends Error {
 
     constructor(message: string) {
         super(message);
-        Object.setPrototypeOf(this, InvalidCredentialsException.prototype);
+        Object.setPrototypeOf(this, EmailSendException.prototype);
+    }
+}
+
+export class InvalidDueDateException extends Error {
+    public readonly name: string = 'Invalid due date';
+
+    constructor(message: string) {
+        super(message);
+        Object.setPrototypeOf(this, InvalidDueDateException.prototype);
     }
 }

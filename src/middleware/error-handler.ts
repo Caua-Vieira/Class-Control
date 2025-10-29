@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { DatabaseException, EmailSendException, InvalidCredentialsException, MessageQueueException, NotFoundException, QueueProcessingException } from "../domain/errors/errors";
+import { DatabaseException, EmailSendException, InvalidCredentialsException, InvalidDueDateException, MessageQueueException, NotFoundException, QueueProcessingException } from "../domain/errors/errors";
 
 export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction): void {
     if (err instanceof NotFoundException) {
@@ -29,6 +29,11 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
 
     if (err instanceof EmailSendException) {
         res.status(503).json({ error: err.message });
+        return;
+    }
+
+    if (err instanceof InvalidDueDateException) {
+        res.status(400).json({ error: err.message });
         return;
     }
 

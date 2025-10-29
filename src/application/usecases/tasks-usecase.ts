@@ -2,7 +2,7 @@ import { Inject } from "typescript-ioc";
 import { TasksRepository } from "../../domain/contracts/tasks-repository";
 import { TasksRequestDTO } from "../../domain/types/tasks-request-dto";
 import { TasksResponseDTO } from "../../domain/types/tasks-response-dto";
-import { NotFoundException } from "../../domain/errors/errors";
+import { InvalidDueDateException, NotFoundException } from "../../domain/errors/errors";
 import { Task } from "../../domain/entities/tasks";
 import { TaskCreatedEvent } from "../../domain/events/task-created-events";
 import { MessageQueue } from "../../domain/contracts/messaging/message-queue";
@@ -15,6 +15,13 @@ export class TasksUseCase {
     ) { }
 
     async createTasks(input: TasksRequestDTO): Promise<void> {
+        const now = new Date();
+        const dueDate = new Date(input.dueDate);
+
+        if (dueDate < now) {
+            throw new InvalidDueDateException('A data de vencimento não pode ser anterior à data atual');
+        }
+
         const task = await this.tasksRepository.createTasks(input);
 
         const event: TaskCreatedEvent = {
