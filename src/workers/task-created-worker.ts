@@ -3,6 +3,7 @@ import { EmailService } from "../domain/contracts/email/email-service";
 import { Container } from "typescript-ioc";
 import { QueueProcessingException } from "../domain/errors/errors";
 import "../infrastructure/config/ioc";
+import { taskCreatedTemplate } from "../infrastructure/email/template/task-created-template";
 
 async function startWorker() {
     try {
@@ -18,12 +19,14 @@ async function startWorker() {
             if (msg) {
                 try {
                     const content = JSON.parse(msg.content.toString());
-                    const { title, description, userEmail } = content;
+                    const { title, description, dueDate, userEmail } = content;
+
+                    const emailBody = taskCreatedTemplate(title, description, dueDate);
 
                     await emailService.sendEmail(
                         userEmail,
-                        "Nova tarefa criada",
-                        `<h3>${title}</h3><p>${description}</p>`
+                        "Nova tarefa criada — ClassControl",
+                        emailBody
                     );
 
                     channel.ack(msg);
