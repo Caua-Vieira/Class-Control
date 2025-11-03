@@ -6,6 +6,7 @@ import { TasksRequestDTO } from "../../../domain/types/tasks-request-dto";
 import { Task } from "../../../domain/entities/tasks";
 import { TasksResponseDTO } from "../../../domain/types/tasks-response-dto";
 import { mapTaskToDTO } from "../../../domain/mappers/map-tasks-response";
+import { ITaskReminder } from "../../../domain/types/task-reminder";
 
 export class HttpTasksRepository implements TasksRepository {
     constructor(@Inject private database: Database) { }
@@ -74,5 +75,23 @@ export class HttpTasksRepository implements TasksRepository {
         } catch (error) {
             throw new DatabaseException("Erro ao atualizar a task");
         }
+    }
+
+    async findTasksDueBetween(start: Date, end: Date): Promise<ITaskReminder[]> {
+        const repository = this.database.appDataSource.getRepository(Task);
+
+        const tasks = await repository
+            .createQueryBuilder("t")
+            .innerJoin("t.user", "u")
+            .where("t.dueDate BETWEEN :start AND :end", { start, end })
+            .select([
+                "u.email",
+                "t.title",
+                "t.description",
+                "t.dueDate"
+            ])
+            .getRawMany();
+
+        return tasks;
     }
 }
