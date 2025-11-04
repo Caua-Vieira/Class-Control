@@ -25,7 +25,7 @@ async function checkUpcomingTasks() {
     else continue;
 
     await emailService.sendEmail(
-      'email',
+      emails.email,
       subject,
       `
             <div style="font-family: Arial, sans-serif; color: #333;">
