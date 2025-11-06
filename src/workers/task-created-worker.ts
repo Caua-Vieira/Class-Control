@@ -25,7 +25,7 @@ async function startWorker() {
 
                     await emailService.sendEmail(
                         userEmail,
-                        "Nova tarefa criada — ClassControl",
+                        "Nova tarefa criada — SmartTasks",
                         emailBody
                     );
 
