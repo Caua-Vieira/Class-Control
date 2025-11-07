@@ -15,8 +15,8 @@ async function checkUpcomingTasks() {
 
   const emailsTasks = await tasksRepository.findTasksDueBetween(now, oneWeekAhead);
 
-  for (const emails of emailsTasks) {
-    const dueDate = new Date(emails.dueDate);
+  for (const task of emailsTasks) {
+    const dueDate = new Date(task.dueDate);
     const diffInDays = Math.ceil((dueDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
 
     let subject = "";
@@ -25,13 +25,13 @@ async function checkUpcomingTasks() {
     else continue;
 
     await emailService.sendEmail(
-      emails.email,
+      task.email,
       subject,
       `
             <div style="font-family: Arial, sans-serif; color: #333;">
               <h2>${subject}</h2>
-              <p><strong>Título:</strong> ${emails.title}</p>
-              <p><strong>Descrição:</strong> ${emails.description}</p>
+              <p><strong>Título:</strong> ${task.title}</p>
+              <p><strong>Descrição:</strong> ${task.description}</p>
               <p><strong>Data de vencimento:</strong> ${dueDate.toLocaleDateString()}</p>
             </div>
           `
