@@ -85,10 +85,10 @@ export class HttpTasksRepository implements TasksRepository {
             .innerJoin("t.user", "u")
             .where("t.dueDate BETWEEN :start AND :end", { start, end })
             .select([
-                "u.email",
-                "t.title",
-                "t.description",
-                "t.dueDate"
+                "u.email AS email",
+                "t.title AS title",
+                "t.description AS description",
+                "t.dueDate AS dueDate"
             ])
             .getRawMany();
 
