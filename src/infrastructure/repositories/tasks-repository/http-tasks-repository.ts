@@ -38,7 +38,7 @@ export class HttpTasksRepository implements TasksRepository {
             await repository.delete(id);
 
         } catch (error) {
-            throw new DatabaseException("Ocorreu um erro ao deletar a task");
+            throw new DatabaseException("Ocorreu um erro ao deletar task");
         }
     }
 
@@ -65,7 +65,7 @@ export class HttpTasksRepository implements TasksRepository {
             return mapTaskToDTO(tasks);
 
         } catch (error) {
-            throw new DatabaseException("Ocorreu um erro ao buscar as tasks");
+            throw new DatabaseException("Ocorreu um erro ao buscar tasks");
         }
     }
 
@@ -73,7 +73,7 @@ export class HttpTasksRepository implements TasksRepository {
         try {
             await this.database.appDataSource.getRepository(Task).update(id, data);
         } catch (error) {
-            throw new DatabaseException("Erro ao atualizar a task");
+            throw new DatabaseException("Erro ao atualizar task");
         }
     }
 
