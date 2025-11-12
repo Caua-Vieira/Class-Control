@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "start:worker": "ts-node src/workers/task-created-worker.ts"
+    "start:worker": "ts-node src/workers/task-created-worker.ts",
+    "start:cron": "ts-node src/task-reminder-cron.ts"
   },
   "keywords": [],
   "author": "",

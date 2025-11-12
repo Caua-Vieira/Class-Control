@@ -2,7 +2,7 @@ import { Container } from "typescript-ioc";
 import { TasksRepository } from "../domain/contracts/tasks-repository";
 import { EmailService } from "../domain/contracts/email/email-service";
 
-async function checkUpcomingTasks() {
+export async function checkUpcomingTasks() {
   const tasksRepository = Container.get(TasksRepository);
   const emailService = Container.get(EmailService);
 
@@ -38,5 +38,3 @@ async function checkUpcomingTasks() {
     );
   }
 }
-
-checkUpcomingTasks();
