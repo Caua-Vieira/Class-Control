@@ -1,6 +1,5 @@
 import { Container } from 'typescript-ioc';
 import './infrastructure/config/ioc';
-import { AppDataSource } from './infrastructure/database/data-source';
 import app from './interfaces/server';
 import { Database } from './infrastructure/database/database';
 
