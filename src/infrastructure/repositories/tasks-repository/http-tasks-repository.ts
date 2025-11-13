@@ -88,7 +88,7 @@ export class HttpTasksRepository implements TasksRepository {
                 "u.email AS email",
                 "t.title AS title",
                 "t.description AS description",
-                "t.dueDate AS dueDate"
+                "t.dueDate AS due_date"
             ])
             .getRawMany();
 
