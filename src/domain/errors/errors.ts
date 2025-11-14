@@ -57,3 +57,12 @@ export class InvalidDueDateException extends Error {
         Object.setPrototypeOf(this, InvalidDueDateException.prototype);
     }
 }
+
+export class CronJobException extends Error {
+    public readonly name: string = 'Cron job error';
+
+    constructor(message: string) {
+        super(message);
+        Object.setPrototypeOf(this, CronJobException.prototype);
+    }
+}
