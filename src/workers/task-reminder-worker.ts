@@ -32,7 +32,7 @@ export async function checkUpcomingTasks() {
           <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
             <h2 style="color: #2a7ae4;">${subject}</h2>
             <p>Olá! 👋</p>
-            <p>Esta é apenas uma lembrança de que a seguinte tarefa está se aproximando do prazo de vencimento:</p>
+            <p>Essa é apenas uma lembrança de que a seguinte tarefa está se aproximando do prazo de vencimento:</p>
             
             <div style="background-color: #f8f9fa; border-left: 4px solid #2a7ae4; padding: 12px; margin: 16px 0; border-radius: 6px;">
               <p><strong>Título:</strong> ${task.title}</p>
