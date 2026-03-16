@@ -8,5 +8,6 @@ export abstract class TasksRepository {
     abstract deleteTasks(id: number): Promise<void>;
     abstract getTasks(): Promise<TasksResponseDTO[]>;
     abstract concludeTasks(id: number, data: Partial<Task>): Promise<void>;
+    abstract updateTasks(id: number, data: Task): Promise<void>;
     abstract findTasksDueBetween(start: Date, end: Date): Promise<ITaskReminder[]>;
 }

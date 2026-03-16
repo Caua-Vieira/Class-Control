@@ -44,6 +44,8 @@ export class TasksController {
         const { id } = req.params;
         const { data } = req.body;
 
+        await this.tasksUseCase.updateTasks(Number(id), data);
 
+        res.status(204).send();
     }
 }
