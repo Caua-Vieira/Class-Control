@@ -1,6 +1,6 @@
 import { Inject } from "typescript-ioc";
 import { Database } from "../../database/database";
-import { DatabaseException } from "../../../domain/errors/errors";
+import { DatabaseException, NotFoundException } from "../../../domain/errors/errors";
 import { TasksRepository } from "../../../domain/contracts/tasks-repository";
 import { TasksRequestDTO } from "../../../domain/types/tasks-request-dto";
 import { Task } from "../../../domain/entities/tasks";
@@ -93,5 +93,27 @@ export class HttpTasksRepository implements TasksRepository {
             .getRawMany();
 
         return tasks;
+    }
+
+    async updateTasks(id: number, data: Partial<Task>): Promise<void> {
+        try {
+            const repository = this.database.appDataSource.getRepository(Task);
+
+            const task = await repository.findOne({ where: { id } });
+
+            if (!task) {
+                throw new NotFoundException("Task não encontrada");
+            }
+
+            await repository.update(id, {
+                title: data.title,
+                description: data.description,
+                dueDate: data.dueDate,
+                status: data.status
+            });
+
+        } catch (error) {
+            throw new DatabaseException("Erro ao atualizar task");
+        }
     }
 }
