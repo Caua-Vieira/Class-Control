@@ -52,7 +52,7 @@ export class TasksUseCase {
         await this.tasksRepository.concludeTasks(id, { status: 'Concluída' });
     }
 
-    async updateTasks(id: number, data: Task): Promise<void> {
+    async updateTasks(id: number, data: Partial<Task>): Promise<void> {
         await this.tasksRepository.updateTasks(id, data);
     }
 }

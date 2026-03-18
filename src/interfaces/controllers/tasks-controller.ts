@@ -42,7 +42,7 @@ export class TasksController {
 
     async updateTasks(req: Request, res: Response) {
         const { id } = req.params;
-        const { data } = req.body;
+        const data = req.body;
 
         await this.tasksUseCase.updateTasks(Number(id), data);
 

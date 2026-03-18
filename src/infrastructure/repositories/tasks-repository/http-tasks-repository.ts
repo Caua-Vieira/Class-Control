@@ -105,12 +105,9 @@ export class HttpTasksRepository implements TasksRepository {
                 throw new NotFoundException("Task não encontrada");
             }
 
-            await repository.update(id, {
-                title: data.title,
-                description: data.description,
-                dueDate: data.dueDate,
-                status: data.status
-            });
+            Object.assign(task, data);
+
+            await repository.save(task);
 
         } catch (error) {
             throw new DatabaseException("Erro ao atualizar task");
