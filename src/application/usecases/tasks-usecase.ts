@@ -6,6 +6,7 @@ import { InvalidDueDateException, NotFoundException } from "../../domain/errors/
 import { Task } from "../../domain/entities/tasks";
 import { TaskCreatedEvent } from "../../domain/events/task-created-events";
 import { MessageQueue } from "../../domain/contracts/messaging/message-queue";
+import { logger } from "../../infrastructure/config/logger";
 
 export class TasksUseCase {
 
@@ -15,14 +16,18 @@ export class TasksUseCase {
     ) { }
 
     async createTasks(input: TasksRequestDTO): Promise<void> {
+        logger.info({ userId: input.userId, dueDate: input.dueDate }, 'creating task')
+
         const now = new Date();
         const dueDate = new Date(input.dueDate);
 
         if (dueDate < now) {
+            logger.warn({ userId: input.userId, dueDate: input.dueDate }, 'task creation failed: invalid due date')
             throw new InvalidDueDateException('A data de vencimento não pode ser anterior à data atual');
         }
 
         const task = await this.tasksRepository.createTasks(input);
+        logger.info({ taskId: task.id, userId: task.user.id }, 'task created')
 
         const event: TaskCreatedEvent = {
             id: task.id,
@@ -34,6 +39,7 @@ export class TasksUseCase {
         };
 
         await this.messageQueue.publish("task_created", event);
+        logger.info({ taskId: task.id, userId: task.user.id }, 'task created event published')
     }
 
     async deleteTasks(id: number): Promise<void> {
