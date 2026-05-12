@@ -8,7 +8,6 @@ describe("AuthController - login", () => {
     let res: any;
 
     beforeEach(() => {
-        // Mock do usecase
         loginUseCase = {
             execute: jest.fn(),
         } as any;
