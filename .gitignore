@@ -12,3 +12,9 @@ docker-compose.override.yml
 
 # Editor/IDE
 .vscode/
+
+# Tests
+coverage/
+
+# Claude Code
+.claude/settings.local.json
