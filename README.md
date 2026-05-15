@@ -1,4 +1,4 @@
-# ClassControl
+# SmartTasks
 
 API REST para gerenciamento de tarefas com autenticação JWT, notificações por e-mail e lembretes automáticos via fila de mensagens e jobs agendados.
 
@@ -20,7 +20,7 @@ API REST para gerenciamento de tarefas com autenticação JWT, notificações po
 
 ## Sobre o Projeto
 
-ClassControl é uma API de gerenciamento de tarefas construída com foco em boas práticas de engenharia de software. O projeto demonstra o uso de **Clean Architecture**, **event-driven design**, **filas de mensagens** e **jobs agendados** em uma aplicação Node.js/TypeScript.
+SmartTasks é uma API de gerenciamento de tarefas construída com foco em boas práticas de engenharia de software. O projeto demonstra o uso de **Clean Architecture**, **event-driven design**, **filas de mensagens** e **jobs agendados** em uma aplicação Node.js/TypeScript.
 
 Ao criar uma tarefa, um evento é publicado no RabbitMQ, processado por um worker assíncrono que envia um e-mail de confirmação ao usuário. Um job agendado (cron) monitora continuamente as tarefas e envia lembretes automáticos 7 e 3 dias antes do vencimento.
 
@@ -149,7 +149,7 @@ PORT=3000
 # Banco de Dados (PostgreSQL)
 DB_USER=admin
 DB_PASSWORD=sua_senha_aqui
-DB_NAME=TasksManagement
+DB_NAME=SmartTasks
 DB_HOST=localhost
 DB_PORT=5432
 
@@ -178,8 +178,8 @@ SMTP_PASS=sua_senha_de_app_gmail
 
 **1. Clone o repositório:**
 ```bash
-git clone https://github.com/Caua-Vieira/ClassControl.git
-cd ClassControl
+git clone https://github.com/Caua-Vieira/smart-tasks-management.git
+cd smart-tasks-management
 ```
 
 **2. Configure o `.env`** conforme a seção [Variáveis de Ambiente](#variáveis-de-ambiente).
@@ -266,17 +266,6 @@ npm run test:coverage
 
 O relatório de cobertura é gerado na pasta `coverage/` e inclui métricas de linhas, funções, branches e statements.
 
-### O que está testado
-
-| Camada         | Arquivos de Teste                                         |
-|----------------|-----------------------------------------------------------|
-| Casos de Uso   | `login-usecase`, `tasks-usecase`                          |
-| Controllers    | `auth-controller`, `tasks-controller`                     |
-| Middleware     | `auth-middleware`, `error-handler`                        |
-| Infraestrutura | `jwt`, `task-created-template`                            |
-| Workers        | `task-reminder-worker`                                    |
-| Mappers        | `map-tasks-response`                                      |
-
 ---
 
 ## CI/CD
@@ -298,40 +287,40 @@ O projeto possui um pipeline de **GitHub Actions** configurado em `.github/workf
 ## Estrutura do Projeto
 
 ```
-ClassControl/
+SmartTasks/
 ├── .github/
 │   └── workflows/
-│       └── ci.yml                  # Pipeline de CI/CD
+│       └── ci.yml
 ├── src/
 │   ├── domain/
-│   │   ├── contracts/              # Interfaces/contratos do domínio
-│   │   ├── entities/               # Entidades TypeORM (User, Task)
-│   │   ├── errors/                 # Exceções de domínio customizadas
-│   │   ├── events/                 # Definições de eventos
-│   │   ├── mappers/                # Transformações de entidade para DTO
-│   │   └── types/                  # DTOs e tipos de requisição/resposta
+│   │   ├── contracts/
+│   │   ├── entities/
+│   │   ├── errors/
+│   │   ├── events/
+│   │   ├── mappers/
+│   │   └── types/
 │   ├── application/
-│   │   └── usecases/               # Regras de negócio (login, tasks)
+│   │   └── usecases/
 │   ├── infrastructure/
-│   │   ├── config/                 # IoC, JWT, Logger
-│   │   ├── database/               # Configuração TypeORM / DataSource
-│   │   ├── email/                  # Nodemailer + templates de e-mail
-│   │   ├── messaging/              # Serviço RabbitMQ
-│   │   └── repositories/           # Implementações dos repositórios
+│   │   ├── config/
+│   │   ├── database/
+│   │   ├── email/
+│   │   ├── messaging/
+│   │   └── repositories/
 │   ├── interfaces/
-│   │   ├── controllers/            # Controllers Express
-│   │   ├── routes/                 # Definição das rotas
-│   │   └── server.ts               # Configuração do servidor Express
+│   │   ├── controllers/
+│   │   ├── routes/
+│   │   └── server.ts
 │   ├── middleware/
-│   │   ├── auth-middleware.ts      # Validação do token JWT
-│   │   └── error-handler.ts        # Tratamento centralizado de erros
+│   │   ├── auth-middleware.ts
+│   │   └── error-handler.ts
 │   ├── workers/
-│   │   ├── task-created-worker.ts  # Consumidor: envia e-mail ao criar tarefa
-│   │   └── task-reminder-worker.ts # Consumidor: envia lembretes de vencimento
-│   ├── index.ts                    # Entry point da API
-│   └── task-reminder-cron.ts       # Entry point do cron de lembretes
-├── tests/                          # Testes unitários (espelham src/)
-├── docker-compose.yml              # PostgreSQL + RabbitMQ
+│   │   ├── task-created-worker.ts
+│   │   └── task-reminder-worker.ts
+│   ├── index.ts
+│   └── task-reminder-cron.ts
+├── tests/
+├── docker-compose.yml
 ├── jest.config.js
 ├── tsconfig.json
 ├── tsconfig.test.json
@@ -339,25 +328,3 @@ ClassControl/
 ```
 
 ---
-
-## Modelos de Dados
-
-### User
-| Campo       | Tipo          | Descrição                    |
-|-------------|---------------|------------------------------|
-| `id`        | number (PK)   | Identificador único          |
-| `name`      | varchar(100)  | Nome do usuário              |
-| `email`     | varchar(150)  | E-mail único                 |
-| `password`  | varchar(255)  | Senha com hash bcrypt        |
-| `createdAt` | timestamp     | Data de criação              |
-
-### Task
-| Campo         | Tipo          | Descrição                              |
-|---------------|---------------|----------------------------------------|
-| `id`          | number (PK)   | Identificador único                    |
-| `title`       | varchar(100)  | Título da tarefa                       |
-| `description` | text          | Descrição detalhada                    |
-| `dueDate`     | timestamp     | Data de vencimento                     |
-| `status`      | varchar(20)   | Status (`Pendente` / `Concluída`)      |
-| `userId`      | number (FK)   | Referência ao usuário dono da tarefa   |
-| `createdAt`   | timestamp     | Data de criação                        |
