@@ -3,7 +3,9 @@ services:
     build: .
     ports:
       - "${PORT:-3000}:3000"
-    env_file: .env
+    env_file:
+      - path: .env
+        required: false
     environment:
       DB_HOST: postgres
       RABBITMQ_URL: amqp://rabbitmq
