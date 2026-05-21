@@ -9,7 +9,7 @@ export class RabbitMQService implements MessageQueue {
     private async getChannel(): Promise<Channel> {
         try {
             if (!this.connection) {
-                this.connection = await amqp.connect("amqp://localhost");
+                this.connection = await amqp.connect(process.env.RABBITMQ_URL ?? "amqp://localhost");
             }
 
             if (!this.channel) {
