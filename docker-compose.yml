@@ -3,20 +3,10 @@ services:
     build: .
     ports:
       - "${PORT:-3000}:3000"
+    env_file: .env
     environment:
-      PORT: ${PORT:-3000}
       DB_HOST: postgres
-      DB_PORT: ${DB_PORT:-5432}
-      DB_USER: ${DB_USER:-admin}
-      DB_PASSWORD: ${DB_PASSWORD:-admin}
-      DB_NAME: ${DB_NAME:-class_control}
-      JWT_SECRET: ${JWT_SECRET}
       RABBITMQ_URL: amqp://rabbitmq
-      SMTP_HOST: ${SMTP_HOST}
-      SMTP_PORT: ${SMTP_PORT:-587}
-      SMTP_USER: ${SMTP_USER}
-      SMTP_PASS: ${SMTP_PASS}
-      LOG_LEVEL: ${LOG_LEVEL:-info}
     depends_on:
       postgres:
         condition: service_healthy
