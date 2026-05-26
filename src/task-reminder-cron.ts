@@ -12,10 +12,10 @@ async function startCron() {
 
     cron.schedule("*/10 * * * * *", async () => {
         try {
-            console.log("⏰ Executando verificação de tarefas...");
+            console.log("Executando verificação de tarefas...");
             await checkUpcomingTasks();
         } catch (error) {
-            console.error("[NODE-CRON] [ERROR]", error);
+            console.error("[NODE-CRON] ERROR", error);
         }
     });
 }
