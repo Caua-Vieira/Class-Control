@@ -23,7 +23,7 @@ export class NodemailerService implements EmailService {
             logger.info({ to, subject }, 'sending email');
 
             await this.transporter.sendMail({
-                from: `"ClassControl" <${process.env.SMTP_USER}>`,
+                from: `"SmartTasksManagement" <${process.env.SMTP_USER}>`,
                 to,
                 subject,
                 html: body,
